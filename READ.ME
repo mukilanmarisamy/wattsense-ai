@@ -1,0 +1,52 @@
+# WattSense AI
+
+Finds which appliance is running from a single smart meter's readings, then estimates each appliance's share of the electricity bill using Tamil Nadu slab rates.
+
+**Live demo:** PASTE-YOUR-STREAMLIT-LINK-HERE
+
+## What it does
+
+- Simulates a household's smart-meter data for one day (one reading per second).
+- Detects the moments an appliance switches on or off.
+- Trains a Random Forest to name the appliance from its power signature.
+- Estimates each appliance's energy use and cost with Tamil Nadu slab rates.
+- Flags a fridge or AC cycle that runs much longer than normal.
+- Lets you test the model with your own inputs.
+
+The data is simulated, so the results show the method working. They do not prove it works in a real home.
+
+## Run it on your computer
+
+You need Python 3.10 or newer and Git.
+
+```
+git clone https://github.com/YOUR-GITHUB-USERNAME/wattsense-ai.git
+cd wattsense-ai
+python -m pip install -r requirements.txt
+python -m streamlit run app.py
+```
+
+The app opens at http://localhost:8501. The first load takes a few seconds while it simulates a day, finds the events and trains the model.
+
+If `python` is not recognised on Windows, use `py` instead of `python`.
+
+## How to use it
+
+1. Click **Run full pipeline** in the sidebar to generate new data. Change the seed number to get a different day.
+2. Use **Simulate a problem** to inject a fault, then run the pipeline again and open **Fault alerts**.
+3. Set the **billing period** in days to see the projected bill.
+4. Open **Try the model** and move the sliders to see which appliance the model predicts.
+
+## Project files
+
+| File | What it does |
+|---|---|
+| `app.py` | Streamlit dashboard |
+| `simulator.py` | Generates the smart-meter data |
+| `event-extractor.py` | Finds switch-on and switch-off events |
+| `ml_train.py` | Trains and tests the Random Forest |
+| `analysis.py` | Appliance bill, fault check, slab bill and the Try the model scoring |
+
+## Built with
+
+Python, pandas, scikit-learn, Plotly, Streamlit.
